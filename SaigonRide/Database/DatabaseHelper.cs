@@ -13,7 +13,7 @@ namespace SaigonRide.Database
         // e.g. @"Server=DESKTOP-XXXXX\SQLEXPRESS;..."
         // -------------------------------------------------------
         private const string ConnectionString =
-            @"Server=.;Database=SaigonRideDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            @"Server=.\SQLEXPRESS;Database=SaigonRideDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         public static SqlConnection GetConnection()
         {

@@ -178,7 +178,12 @@ namespace SaigonRide.Forms
                 );
             }
             dgv.DataSource = dt;
-            dgv.Columns["Station ID"]!.Width = 80;
+            if (dgv.Columns.Count > 0) dgv.Columns[0].Width = 80;
+            if (dgv.Columns.Count > 1) dgv.Columns[1].Width = 130;
+            if (dgv.Columns.Count > 2) dgv.Columns[2].Width = 80;
+            if (dgv.Columns.Count > 3) dgv.Columns[3].Width = 90;
+            if (dgv.Columns.Count > 4) dgv.Columns[4].Width = 70;
+            if (dgv.Columns.Count > 5) dgv.Columns[5].Width = 100;
         }
 
         private void Dgv_CellFormatting(object? s, DataGridViewCellFormattingEventArgs e)
