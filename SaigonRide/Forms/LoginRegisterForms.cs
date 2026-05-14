@@ -12,67 +12,98 @@ namespace SaigonRide.Forms
 
         private TextBox txtUsername = null!, txtPassword = null!;
         private ComboBox cmbUserType = null!;
-        private Button   btnLogin = null!, btnRegister = null!;
-        private Label    lblStatus = null!;
+        private Button btnLogin = null!, btnRegister = null!;
+        private Label lblStatus = null!;
 
         public User? LoggedInUser { get; private set; }
 
         public LoginForm()
         {
-            Text            = "SaigonRide — Login";
-            Size            = new Size(420, 360);
-            StartPosition   = FormStartPosition.CenterScreen;
+            Text = "SaigonRide — Login";
+            Size = new Size(420, 360);
+            StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox     = false;
-            BackColor       = Color.FromArgb(245, 245, 245);
+            MaximizeBox = false;
+            BackColor = Color.FromArgb(245, 245, 245);
             Build();
         }
 
         private void Build()
         {
             // Title
-            var title = new Label {
-                Text = "🛵  SaigonRide", Font = new Font("Segoe UI", 18, FontStyle.Bold),
+            var title = new Label
+            {
+                Text = "🛵  SaigonRide",
+                Font = new Font("Segoe UI", 18, FontStyle.Bold),
                 ForeColor = Color.FromArgb(0, 120, 215),
-                Location = new Point(20, 20), Size = new Size(370, 40), TextAlign = ContentAlignment.MiddleCenter };
-            var sub = new Label {
-                Text = "Distributed Vehicle Rental System", Font = new Font("Segoe UI", 9),
-                ForeColor = Color.Gray, Location = new Point(20, 58), Size = new Size(370, 20),
-                TextAlign = ContentAlignment.MiddleCenter };
+                Location = new Point(20, 20),
+                Size = new Size(370, 40),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            var sub = new Label
+            {
+                Text = "Distributed Vehicle Rental System",
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.Gray,
+                Location = new Point(20, 58),
+                Size = new Size(370, 20),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
 
             var lblU = MakeLabel("Username:", 90);
-            txtUsername = MakeTextBox(120);
+            txtUsername = MakeTextBox(90);
 
             var lblP = MakeLabel("Password:", 155);
-            txtPassword = MakeTextBox(185);
+            txtPassword = MakeTextBox(155);
             txtPassword.PasswordChar = '●';
 
             var lblT = MakeLabel("User Type:", 220);
-            cmbUserType = new ComboBox {
-                Location = new Point(130, 220), Size = new Size(230, 25),
-                DropDownStyle = ComboBoxStyle.DropDownList, Font = new Font("Segoe UI", 10) };
+            cmbUserType = new ComboBox
+            {
+                Location = new Point(130, 220),
+                Size = new Size(230, 25),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10)
+            };
             cmbUserType.Items.AddRange(new[] { "Local", "Tourist", "Admin" });
             cmbUserType.SelectedIndex = 0;
 
-            btnLogin = new Button {
-                Text = "Login", Location = new Point(130, 265), Size = new Size(110, 35),
-                BackColor = Color.FromArgb(0, 120, 215), ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
+            btnLogin = new Button
+            {
+                Text = "Login",
+                Location = new Point(130, 265),
+                Size = new Size(110, 35),
+                BackColor = Color.FromArgb(0, 120, 215),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
+            };
             btnLogin.Click += BtnLogin_Click;
 
-            btnRegister = new Button {
-                Text = "Register", Location = new Point(250, 265), Size = new Size(110, 35),
-                BackColor = Color.FromArgb(40, 167, 69), ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 10) };
-            btnRegister.Click += (_, _) => {
+            btnRegister = new Button
+            {
+                Text = "Register",
+                Location = new Point(250, 265),
+                Size = new Size(110, 35),
+                BackColor = Color.FromArgb(40, 167, 69),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10)
+            };
+            btnRegister.Click += (_, _) =>
+            {
                 using var rf = new RegisterForm();
                 rf.ShowDialog(this);
             };
 
-            lblStatus = new Label {
-                Location = new Point(20, 310), Size = new Size(370, 20),
-                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Segoe UI", 9),
-                ForeColor = Color.Red };
+            lblStatus = new Label
+            {
+                Location = new Point(20, 310),
+                Size = new Size(370, 20),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.Red
+            };
 
             Controls.AddRange(new Control[] {
                 title, sub, lblU, txtUsername, lblP, txtPassword,
@@ -98,12 +129,23 @@ namespace SaigonRide.Forms
 
         private static Label MakeLabel(string text, int top) => new()
         {
-            Text = text, Location = new Point(20, top + 3), Size = new Size(105, 22),
-            Font = new Font("Segoe UI", 10), TextAlign = ContentAlignment.MiddleRight
+            Text = text,
+            Location = new Point(20, top + 3),
+            Size = new Size(105, 22),
+            Font = new Font("Segoe UI", 10),
+            TextAlign = ContentAlignment.MiddleRight
         };
+
+        private void InitializeComponent()
+        {
+
+        }
+
         private static TextBox MakeTextBox(int top) => new()
         {
-            Location = new Point(130, top), Size = new Size(230, 25), Font = new Font("Segoe UI", 10)
+            Location = new Point(130, top),
+            Size = new Size(230, 25),
+            Font = new Font("Segoe UI", 10)
         };
     }
 
