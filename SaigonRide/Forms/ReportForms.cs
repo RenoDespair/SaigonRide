@@ -177,6 +177,7 @@ namespace SaigonRide.Forms
                     st.IsLowInventory ? "⚠️ LOW INVENTORY" : "Normal"
                 );
             }
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgv.DataSource = dt;
             if (dgv.Columns.Count > 0) dgv.Columns[0].Width = 80;
             if (dgv.Columns.Count > 1) dgv.Columns[1].Width = 130;
