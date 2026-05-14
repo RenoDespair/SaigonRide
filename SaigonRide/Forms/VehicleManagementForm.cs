@@ -46,8 +46,6 @@ namespace SaigonRide.Forms
                 Text = "🚲  Vehicle Management", Font = new Font("Segoe UI", 13, FontStyle.Bold),
                 ForeColor = Color.White, Location = new Point(10, 10), Size = new Size(350, 30) };
             pnlTop.Controls.Add(hdr);
-            Controls.Add(pnlTop);
-
             var pnlFilter = new Panel { Dock = DockStyle.Top, Height = 45, BackColor = Color.White };
             pnlFilter.Controls.Add(MakeLabel("Category:", 8, 14));
             cmbCatFilter = MakeCmb(80, 10, 130);
@@ -95,7 +93,6 @@ namespace SaigonRide.Forms
             btnDelete.Click += BtnDelete_Click;
             btnRefresh.Click += (_, _) => LoadGrid();
             pnlAct.Controls.AddRange(new Control[] { btnAdd, btnEdit, btnDelete, btnRefresh });
-            Controls.Add(pnlAct);
 
             // ---- Inline form panel ----
             pnlForm = new Panel {
@@ -130,7 +127,12 @@ namespace SaigonRide.Forms
             btnSave.Click   += BtnSave_Click;
             btnCancel.Click += (_, _) => { pnlForm.Visible = false; };
             pnlForm.Controls.AddRange(new Control[] { btnSave, btnCancel });
+            // Correct Dock order: Bottom → Fill → Top
             Controls.Add(pnlForm);
+            Controls.Add(pnlAct);
+            Controls.Add(dgv);
+            Controls.Add(pnlFilter);
+            Controls.Add(pnlTop);
         }
 
         private void LoadGrid()
