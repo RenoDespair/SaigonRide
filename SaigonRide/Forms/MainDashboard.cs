@@ -13,15 +13,27 @@ namespace SaigonRide.Forms
         {
             _user = user;
             Text  = $"SaigonRide — Dashboard  [{_user.Username} / {_user.UserType}]";
-            Size  = new Size(700, 500);
+            Size = new Size(700, 620);
             StartPosition = FormStartPosition.CenterScreen;
-            MinimumSize   = new Size(700, 500);
+            MinimumSize = new Size(700, 620);
             BackColor = Color.FromArgb(245, 247, 250);
             Build();
         }
 
         private void Build()
         {
+            // ---- Welcome panel ----
+            var pnlWelcome = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.White };
+            pnlWelcome.Controls.Add(new Label
+            {
+                Text = $"Welcome back, {_user.Username}! Select a module below.",
+                Location = new Point(20, 18),
+                Size = new Size(600, 28),
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.FromArgb(60, 60, 60)
+            });
+            Controls.Add(pnlWelcome);
+
             // ---- Top bar ----
             var pnlTop = new Panel {
                 Dock = DockStyle.Top, Height = 60,
@@ -41,14 +53,6 @@ namespace SaigonRide.Forms
             btnLogout.Click += (_, _) => { Close(); };
             pnlTop.Controls.AddRange(new Control[] { lblApp, lblUser, btnLogout });
             Controls.Add(pnlTop);
-
-            // ---- Welcome panel ----
-            var pnlWelcome = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.White };
-            pnlWelcome.Controls.Add(new Label {
-                Text = $"Welcome back, {_user.Username}! Select a module below.",
-                Location = new Point(20, 18), Size = new Size(600, 28),
-                Font = new Font("Segoe UI", 11), ForeColor = Color.FromArgb(60, 60, 60) });
-            Controls.Add(pnlWelcome);
 
             // ---- Module grid ----
             var pnlModules = new FlowLayoutPanel {
@@ -82,6 +86,7 @@ namespace SaigonRide.Forms
                 btn.Click += (_, _) => { if (enabled) onClick(); };
                 card.Controls.AddRange(new Control[] { stripe, ico, lTitle, lDesc, btn });
                 pnlModules.Controls.Add(card);
+                pnlModules.AutoScrollPosition = new Point(0, 0);
             }
 
             // ---- Modules by user type ----
