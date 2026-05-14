@@ -188,8 +188,8 @@ namespace SaigonRide.Forms
                     Text = lbl, Location = new Point(20, top + 3), Size = new Size(105, 22),
                     Font = new Font("Segoe UI", 10), TextAlign = ContentAlignment.MiddleRight });
 
-            txtUser     = MakeTB(90);
-            txtPass     = MakeTB(135); txtPass.PasswordChar = '●';
+            txtUser     = MakeTB(65);
+            txtPass     = MakeTB(110); txtPass.PasswordChar = '●';
             cmbType     = new ComboBox {
                 Location = new Point(130, 155), Size = new Size(230, 25),
                 DropDownStyle = ComboBoxStyle.DropDownList, Font = new Font("Segoe UI", 10) };
