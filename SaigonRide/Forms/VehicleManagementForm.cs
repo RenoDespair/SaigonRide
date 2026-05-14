@@ -46,27 +46,26 @@ namespace SaigonRide.Forms
                 Text = "🚲  Vehicle Management", Font = new Font("Segoe UI", 13, FontStyle.Bold),
                 ForeColor = Color.White, Location = new Point(10, 10), Size = new Size(350, 30) };
             pnlTop.Controls.Add(hdr);
-            Controls.Add(pnlTop);
-
             var pnlFilter = new Panel { Dock = DockStyle.Top, Height = 45, BackColor = Color.White };
             pnlFilter.Controls.Add(MakeLabel("Category:", 8, 14));
-            cmbCatFilter = MakeCmb(80, 10, 130);
+            cmbCatFilter = MakeCmb(112, 10, 120);
             cmbCatFilter.Items.AddRange(new[] { "All", "StandardBike", "EScooter" });
             cmbCatFilter.SelectedIndex = 0;
             pnlFilter.Controls.Add(cmbCatFilter);
 
-            pnlFilter.Controls.Add(MakeLabel("Status:", 220, 14));
-            cmbStatFilter = MakeCmb(275, 10, 130);
+            pnlFilter.Controls.Add(MakeLabel("Status:", 244, 14));
+            cmbStatFilter = MakeCmb(348, 10, 120);
             cmbStatFilter.Items.AddRange(new[] { "All", "Available", "InTransit", "Maintenance" });
             cmbStatFilter.SelectedIndex = 0;
             pnlFilter.Controls.Add(cmbStatFilter);
 
-            var btnSearch = MakeBtn("🔍 Search", 415, 10, 90, Color.FromArgb(0, 120, 215));
+            var btnSearch = MakeBtn("🔍 Search", 480, 10, 90, Color.FromArgb(0, 120, 215));
             btnSearch.Click += (_, _) => LoadGrid();
             pnlFilter.Controls.Add(btnSearch);
 
             lblCount = new Label {
-                Location = new Point(515, 14), Size = new Size(200, 22),
+                Location = new Point(600, 14),
+                Size = new Size(200, 22),
                 Font = new Font("Segoe UI", 9), ForeColor = Color.Gray };
             pnlFilter.Controls.Add(lblCount);
             Controls.Add(pnlFilter);
@@ -95,7 +94,6 @@ namespace SaigonRide.Forms
             btnDelete.Click += BtnDelete_Click;
             btnRefresh.Click += (_, _) => LoadGrid();
             pnlAct.Controls.AddRange(new Control[] { btnAdd, btnEdit, btnDelete, btnRefresh });
-            Controls.Add(pnlAct);
 
             // ---- Inline form panel ----
             pnlForm = new Panel {
@@ -130,7 +128,12 @@ namespace SaigonRide.Forms
             btnSave.Click   += BtnSave_Click;
             btnCancel.Click += (_, _) => { pnlForm.Visible = false; };
             pnlForm.Controls.AddRange(new Control[] { btnSave, btnCancel });
+            // Correct Dock order: Bottom → Fill → Top
             Controls.Add(pnlForm);
+            Controls.Add(pnlAct);
+            Controls.Add(dgv);
+            Controls.Add(pnlFilter);
+            Controls.Add(pnlTop);
         }
 
         private void LoadGrid()

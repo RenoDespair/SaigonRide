@@ -32,7 +32,8 @@ namespace SaigonRide.Forms
                 Text = "📊  Revenue Report by Vehicle Category",
                 Font = new Font("Segoe UI", 13, FontStyle.Bold), ForeColor = Color.White,
                 Location = new Point(10, 10), Size = new Size(500, 30) });
-            Controls.Add(pnlTop);
+            // pnlTop added last so Dock=Top stacks on top correctly
+            // (dgv with Dock=Fill must be added before any Dock=Top panels)
 
             var pnlFilter = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = Color.White };
             chkUseRange = new CheckBox {
@@ -57,7 +58,6 @@ namespace SaigonRide.Forms
                 FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9, FontStyle.Bold) };
             btnRun.Click += (_, _) => LoadReport();
             pnlFilter.Controls.AddRange(new Control[] { chkUseRange, dtpFrom, lbl, dtpTo, btnRun });
-            Controls.Add(pnlFilter);
 
             dgv = new DataGridView {
                 Dock = DockStyle.Fill, ReadOnly = true, AllowUserToAddRows = false,
@@ -66,14 +66,16 @@ namespace SaigonRide.Forms
                 BackgroundColor = Color.White, BorderStyle = BorderStyle.None, Font = new Font("Segoe UI", 10) };
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(230, 240, 255);
-            Controls.Add(dgv);
-
+            // Add in correct order: Bottom first, Fill second, Top panels last
             var pnlBot = new Panel { Dock = DockStyle.Bottom, Height = 40, BackColor = Color.White };
             lblTotal = new Label {
                 Location = new Point(10, 10), Size = new Size(660, 22),
                 Font = new Font("Segoe UI", 11, FontStyle.Bold), ForeColor = Color.FromArgb(0, 120, 215) };
             pnlBot.Controls.Add(lblTotal);
             Controls.Add(pnlBot);
+            Controls.Add(dgv);
+            Controls.Add(pnlFilter);
+            Controls.Add(pnlTop);
         }
 
         private void LoadReport()
@@ -125,15 +127,11 @@ namespace SaigonRide.Forms
                 Text = "📍  Station Inventory / Utilization Report",
                 Font = new Font("Segoe UI", 13, FontStyle.Bold), ForeColor = Color.White,
                 Location = new Point(10, 10), Size = new Size(500, 30) });
-            Controls.Add(pnlTop);
-
             var pnlInfo = new Panel { Dock = DockStyle.Top, Height = 35, BackColor = Color.White };
             pnlInfo.Controls.Add(new Label {
                 Text = "⚠️  Stations highlighted in RED are Low Inventory (< 20% full) — qualify for 15% discount",
                 Location = new Point(8, 8), Size = new Size(660, 20), Font = new Font("Segoe UI", 8, FontStyle.Italic),
                 ForeColor = Color.DarkRed });
-            Controls.Add(pnlInfo);
-
             dgv = new DataGridView {
                 Dock = DockStyle.Fill, ReadOnly = true, AllowUserToAddRows = false,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect, RowHeadersVisible = false,
@@ -142,8 +140,7 @@ namespace SaigonRide.Forms
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(200, 230, 210);
             dgv.CellFormatting += Dgv_CellFormatting;
-            Controls.Add(dgv);
-
+            // Add in correct order: Bottom first, Fill second, Top panels last
             var pnlBot = new Panel { Dock = DockStyle.Bottom, Height = 40, BackColor = Color.White };
             var btnRef = new Button {
                 Text = "🔄 Refresh", Location = new Point(10, 8), Size = new Size(100, 28),
@@ -152,6 +149,9 @@ namespace SaigonRide.Forms
             btnRef.Click += (_, _) => LoadReport();
             pnlBot.Controls.Add(btnRef);
             Controls.Add(pnlBot);
+            Controls.Add(dgv);
+            Controls.Add(pnlInfo);
+            Controls.Add(pnlTop);
         }
 
         private void LoadReport()
@@ -177,6 +177,7 @@ namespace SaigonRide.Forms
                     st.IsLowInventory ? "⚠️ LOW INVENTORY" : "Normal"
                 );
             }
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgv.DataSource = dt;
             if (dgv.Columns.Count > 0) dgv.Columns[0].Width = 80;
             if (dgv.Columns.Count > 1) dgv.Columns[1].Width = 130;

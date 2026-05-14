@@ -22,43 +22,51 @@ namespace SaigonRide.Forms
 
         private void Build()
         {
-            // ---- Welcome panel ----
-            var pnlWelcome = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.White };
+            // ---- Module grid (added first so Dock=Fill gets remaining space) ----
+            var pnlModules = new FlowLayoutPanel {
+                Dock = DockStyle.Fill, Padding = new Padding(20, 15, 20, 15),
+                AutoScroll = true, BackColor = Color.FromArgb(245, 247, 250) };
+            Controls.Add(pnlModules);
+
+            // ---- Welcome panel (added second; Dock=Top stacks below blue bar) ----
+            var pnlWelcome = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = Color.White };
             pnlWelcome.Controls.Add(new Label
             {
                 Text = $"Welcome back, {_user.Username}! Select a module below.",
-                Location = new Point(20, 18),
-                Size = new Size(600, 28),
+                Location = new Point(20, 14),
+                Size = new Size(620, 28),
                 Font = new Font("Segoe UI", 11),
                 ForeColor = Color.FromArgb(60, 60, 60)
             });
             Controls.Add(pnlWelcome);
 
-            // ---- Top bar ----
+            // ---- Top bar (added last; Dock=Top stacks on top of everything) ----
             var pnlTop = new Panel {
                 Dock = DockStyle.Top, Height = 60,
                 BackColor = Color.FromArgb(0, 120, 215) };
             var lblApp = new Label {
                 Text = "🛵  SaigonRide — Distributed Vehicle Rental System",
                 Font = new Font("Segoe UI", 13, FontStyle.Bold), ForeColor = Color.White,
-                Location = new Point(15, 10), Size = new Size(560, 30) };
+                Location = new Point(15, 10), Size = new Size(560, 30),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left };
             var lblUser = new Label {
                 Text = $"👤  {_user.Username}  |  {_user.UserType}",
                 Font = new Font("Segoe UI", 9), ForeColor = Color.LightBlue,
-                Location = new Point(15, 38), Size = new Size(560, 18) };
+                Location = new Point(15, 38), Size = new Size(560, 18),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left };
             var btnLogout = new Button {
-                Text = "Logout", Location = new Point(600, 14), Size = new Size(80, 32),
+                Text = "Logout", Size = new Size(80, 32),
                 BackColor = Color.FromArgb(220, 53, 69), ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9) };
-            btnLogout.Click += (_, _) => { Close(); };
+                FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right };
             pnlTop.Controls.AddRange(new Control[] { lblApp, lblUser, btnLogout });
+            // Set logout position after adding to panel so Right anchor works correctly
+            btnLogout.Location = new Point(pnlTop.ClientSize.Width - 95, 14);
+            pnlTop.Resize += (_, _) => btnLogout.Location = new Point(pnlTop.ClientSize.Width - 95, 14);
+            btnLogout.Click += (_, _) => { Close(); };
             Controls.Add(pnlTop);
 
-            // ---- Module grid ----
-            var pnlModules = new FlowLayoutPanel {
-                Dock = DockStyle.Fill, Padding = new Padding(20, 15, 20, 15),
-                AutoScroll = true, BackColor = Color.FromArgb(245, 247, 250) };
-            Controls.Add(pnlModules);
+
 
             void AddModule(string icon, string title, string desc, Color color, Action onClick, bool enabled = true)
             {
