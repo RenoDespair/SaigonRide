@@ -139,6 +139,6 @@ SaigonRide/
 ---
 
 ## GitHub Repository
-> *(Add your GitHub repo URL here before submission)*
+> https://github.com/RenoDespair/SaigonRide.git
 
 Both team members must have **>10 meaningful commits** each.
